@@ -1,0 +1,21 @@
+[Unit]
+Description=IECU 3.1 运维面板 (Node.js)
+Documentation=file:///var/lib/llm/panel/server.js
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/lib/llm/panel
+ExecStart=/var/lib/llm/bin/node /var/lib/llm/panel/server.js
+Environment=PANEL_PORT=9000
+# 面板是纯只读+白名单 systemctl 调用，不做重活；异常退出就重启
+Restart=always
+RestartSec=5
+# 面板必须比 LLM 更耐活：OOM 时优先牺牲 llama-server 而不是面板
+OOMScoreAdjust=-800
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

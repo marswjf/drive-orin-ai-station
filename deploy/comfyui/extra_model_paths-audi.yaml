@@ -1,0 +1,63 @@
+# 这块板（__BOARD_LAN_IP__）专用的 ComfyUI 模型搜索根。
+#
+# ★ 与上一块板那份 extra_model_paths.yaml 的唯一区别：**删掉了 /opt/m0 这个根**。
+#   上一块板的 /opt/m0 是 vblkdev23 独立 26G 设备，放模型没问题；
+#   这块板的 /opt/m0 是 vblkdev56，与 /opt/other 同一个设备，
+#   而 /opt/other/overlay/upper 正是 /var 的可写层宿主 ——
+#   往 /opt/m0/sd-models 放一个 7G 模型就会直接吃掉 /var 的空间，
+#   而 /var 装着 /var/lib/llm（node、frpc、面板密码、整个运行时）与 /var/log。
+#   所以这里物理上不给它登记，避免将来误放。
+#
+# ⚠ 每加一类模型，每个根都要同步加同一行 —— ComfyUI 只扫这里列出的键，
+#   目录建了但没登记，模型放进去照样"找不到"（上一块板踩过：model_patches 漏配，
+#   ModelPatchLoader 的下拉一直是空的）。
+#
+# /opt/* 全部是 noexec，但读写数据没问题。
+
+# 主力：原厂恢复镜像清空后腾出的 38 GB
+iecu_update:
+  base_path: /opt/update/sd-models/
+  checkpoints: checkpoints
+  loras: loras
+  vae: vae
+  controlnet: controlnet
+  model_patches: model_patches
+  upscale_models: upscale_models
+  clip: clip
+  clip_vision: clip_vision
+  diffusion_models: diffusion_models
+  text_encoders: text_encoders
+  embeddings: embeddings
+
+# 备用：vblkdev50 30G，本轮主要给 LLM 模型（/opt/m/llm）用，
+# sd-models 这一支留着以后扩展
+iecu_m:
+  base_path: /opt/m/sd-models/
+  checkpoints: checkpoints
+  loras: loras
+  vae: vae
+  controlnet: controlnet
+  model_patches: model_patches
+  upscale_models: upscale_models
+  clip: clip
+  clip_vision: clip_vision
+  diffusion_models: diffusion_models
+  text_encoders: text_encoders
+  embeddings: embeddings
+
+# 合并视图：mergerfs 把 vblkdev23 + /opt/update + /opt/m 并成 95G，
+# 写入自动选剩余最多的分支。放**新下载**的模型很合适，
+# 但注意单个文件不能跨分支（上限是最大分支的剩余空间）。
+iecu_data:
+  base_path: /var/data/sd-models/
+  checkpoints: checkpoints
+  loras: loras
+  vae: vae
+  controlnet: controlnet
+  model_patches: model_patches
+  upscale_models: upscale_models
+  clip: clip
+  clip_vision: clip_vision
+  diffusion_models: diffusion_models
+  text_encoders: text_encoders
+  embeddings: embeddings

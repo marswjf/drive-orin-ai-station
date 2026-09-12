@@ -1,0 +1,32 @@
+# 统一使用 LF 换行。板卡上的 shell 脚本与 systemd 单元遇到 CRLF 会执行失败。
+* text=auto eol=lf
+
+*.sh      text eol=lf
+*.service text eol=lf
+*.toml    text eol=lf
+*.json    text eol=lf
+*.py      text eol=lf
+*.js      text eol=lf
+
+# PowerShell 脚本同样使用 LF，PowerShell 对两种换行都支持
+*.ps1     text eol=lf
+
+# 二进制文件不做换行转换
+*.whl     binary
+*.tar.gz  binary
+*.deb     binary
+*.gguf    binary
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.webp    binary
+*.ico     binary
+*.woff    binary
+*.woff2   binary
+baseline/bin/node binary
+*.mp4     binary
+*.mov     binary
+deploy/frp/frpc binary
+deploy/storage/mergerfs binary
+deploy/storage/mergerfs-fusermount binary

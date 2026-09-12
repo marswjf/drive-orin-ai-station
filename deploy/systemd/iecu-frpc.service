@@ -1,0 +1,30 @@
+[Unit]
+Description=IECU 反向隧道客户端 (frpc)
+# 必须在出网通道建好之后启动：那条 uidrange 规则决定了它能不能连出去
+After=network.target iecu-egress.service iecu-panel.service
+Requires=iecu-egress.service
+# 板子可能比路由器先开机，连不上就一直重试，不要被限流拦住
+# （systemd 245 要求这两项写在 [Unit] 段，写在 [Service] 会被忽略）
+StartLimitIntervalSec=0
+StartLimitBurst=0
+
+[Service]
+Type=simple
+# ★ 以固定 uid 的专用用户运行。site-egress.sh 里的 ip rule 按这个 uid 匹配，
+#   换成别的用户或 DynamicUser 会让规则失配，隧道直接连不出去。
+User=iecufrp
+Group=iecufrp
+ExecStart=/var/lib/llm/frp/frpc -c /var/lib/llm/frp/frpc.toml
+Restart=always
+RestartSec=10
+# 隧道进程不需要任何特权
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/lib/llm/frp
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

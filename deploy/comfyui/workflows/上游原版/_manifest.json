@@ -1,0 +1,35 @@
+{
+ "host": "__BOARD_LAN_IP__",
+ "remoteRoot": "/tmp/h3tpl",
+ "generated": "2026-09-01T14:51:09.601Z",
+ "excluded": [],
+ "items": [
+  {
+   "type": "f",
+   "path": "/tmp/h3tpl/video_minimax_h3_i2v.json",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 44684,
+   "mtime": 1788274268
+  },
+  {
+   "type": "f",
+   "path": "/tmp/h3tpl/video_minimax_h3_r2v.json",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 27576,
+   "mtime": 1788274268
+  },
+  {
+   "type": "f",
+   "path": "/tmp/h3tpl/video_minimax_h3_t2v.json",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 42197,
+   "mtime": 1788274268
+  }
+ ]
+}

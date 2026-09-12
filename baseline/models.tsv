@@ -1,0 +1,27 @@
+# IECU 3.1 模型清单
+# 来源均由 HuggingFace / ModelScope API 实查并按字节数完全一致确认（2026-08-16）
+# 字节数就是校验值：下完对一下大小，不一致就是拿错了文件
+# 列：类别	落点目录	文件名	字节数	来源仓库	必需性
+类别	落点目录	文件名	字节数	来源仓库	必需性
+LLM	/opt/m/llm	Qwen3.6-35B-A3B-MTP-UD-IQ4_XS.gguf	18209036576	unsloth/Qwen3.6-35B-A3B-MTP-GGUF	必需
+LLM	/opt/m/llm	mmproj-F16.gguf	899283680	Youseff1987/Qwen3.6-35B-A3B-Claude-4.6-Opus-Reasoning-Distilled-GGUF-with-mmproj	多模态必需
+LLM	/opt/m/llm	Qwen3-Embedding-0.6B-Q8_0.gguf	639150592	Qwen/Qwen3-Embedding-0.6B-GGUF	向量服务必需
+生图	/opt/update/sd-models/diffusion_models	z_image_turbo-Q8_0.gguf	7224707136	jayn7/Z-Image-Turbo-GGUF	必需
+生图	/opt/update/sd-models/text_encoders	Qwen_3_4b-Q8_0.gguf	4280404704	worstplayer/Z-Image_Qwen_3_4b_text_encoder_GGUF	必需
+生图	/opt/update/sd-models/vae	ae.safetensors	335304388	vpakarinen/zimage-vae-clip-lora	必需（不要量化）
+生图	/opt/update/sd-models/model_patches	Z-Image-Turbo-Fun-Controlnet-Union-2.1-lite-2602-8steps.safetensors	2016627488	alibaba-pai/Z-Image-Turbo-Fun-Controlnet-Union-2.1	ControlNet 工作流
+生图	/opt/update/sd-models/loras	Z-Image-Fun-Lora-Distill-4-Steps-2602-ComfyUI.safetensors	568275120	alibaba-pai/Z-Image-Fun-Lora-Distill	按需
+生图	/opt/update/sd-models/loras	dejpeg_v3.safetensors	680326512	wcde/Z-Image-Turbo-DeJPEG-Lora	老照片修复
+生图	/opt/update/sd-models/loras	dejpeg_detailed.safetensors	170127808	wcde/Z-Image-Turbo-DeJPEG-Lora	老照片修复
+生图	/opt/update/sd-models/SEEDVR2	seedvr2_ema_3b-Q4_K_M.gguf	1995344224	cmeka/SeedVR2-GGUF	视频超分
+生图	/opt/update/sd-models/SEEDVR2	ema_vae_fp16.safetensors	501324814	numz/SeedVR2_comfyUI	视频超分
+生图	/opt/m0/sd-models/upscale_models	4x-UltraSharp.pth	66961958	lokCX/4x-Ultrasharp	放大
+生图	/opt/m0/sd-models/upscale_models	RealESRGAN_x4plus.pth	67040989	schwgHao/RealESRGAN_x4plus	放大
+不建议装	/opt/update/sd-models/text_encoders	qwen_3_4b.safetensors	8044982048	Norby/Z_Image_text_encoders	已被 Q8_0 取代，占 7.5G 换不来收益
+不建议装	/opt/update/sd-models/loras	z_image_turbo_distill_patch_lora_bf16.safetensors	158826336	未查到	来源不明且非必需
+#
+# 直链格式：https://huggingface.co/<来源仓库>/resolve/main/<文件名>
+# 国内走 ModelScope：https://modelscope.cn/models/<来源仓库>/resolve/master/<文件名>（实测 15 MiB/s，HF 直连约 2.9）
+#
+# ⚠ LLM 主模型上游文件名是 Qwen3.6-35B-A3B-UD-IQ4_XS.gguf，板上改名加了 MTP- 前缀以区分。
+#   非 MTP 仓库有同名文件但字节数是 17730509792，不是同一个东西，下错会失去 MTP 投机解码。

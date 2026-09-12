@@ -1,0 +1,48 @@
+# 板上模型分三个分区放：单个分区装不下所有模型。
+# /opt/* 是 noexec，但读写数据没问题；不要用 /opt/other（那是 /var 的 overlay 上层）。
+#
+# ⚠ 每加一类模型，三个根都要同步加同一行——ComfyUI 只扫这里列出的键，
+#   目录建了但没在这里登记，模型放进去照样"找不到"（2026-08-14 踩过：
+#   model_patches 就是漏配的，ModelPatchLoader 的下拉一直是空的）。
+iecu_m0:
+  base_path: /opt/m0/sd-models/
+  checkpoints: checkpoints
+  loras: loras
+  vae: vae
+  controlnet: controlnet
+  model_patches: model_patches
+  upscale_models: upscale_models
+  clip: clip
+  clip_vision: clip_vision
+  diffusion_models: diffusion_models
+  text_encoders: text_encoders
+  embeddings: embeddings
+
+iecu_m:
+  base_path: /opt/m/sd-models/
+  checkpoints: checkpoints
+  loras: loras
+  vae: vae
+  controlnet: controlnet
+  model_patches: model_patches
+  upscale_models: upscale_models
+  clip: clip
+  clip_vision: clip_vision
+  diffusion_models: diffusion_models
+  text_encoders: text_encoders
+  embeddings: embeddings
+
+# 原厂恢复镜像迁到本地后腾出的 38 GB，专放大模型
+iecu_update:
+  base_path: /opt/update/sd-models/
+  checkpoints: checkpoints
+  loras: loras
+  vae: vae
+  controlnet: controlnet
+  model_patches: model_patches
+  upscale_models: upscale_models
+  clip: clip
+  clip_vision: clip_vision
+  diffusion_models: diffusion_models
+  text_encoders: text_encoders
+  embeddings: embeddings

@@ -1,0 +1,20 @@
+[Unit]
+# 这块板专用：局域网静态地址加在 eth 母接口（untagged），不是 eth.254。
+# 原因见 .claude/skills/iecu-provision/references/board-diff-audi-20260817.md：
+# 这块板的诊断口不做 PVID=254 剥 tag，加在 eth.254 上会要求链路两端都处理 VLAN 254；
+# 加在母接口是 untagged 的，普通路由器和交换机直接可达。
+# 只做加法（红线 3）：不动 <SITE2_IP>、不动默认路由、不动 172.31.254.38、不改 tn_eth_init.sh（红线 4）。
+Description=IECU 局域网静态地址 (__BOARD_LAN_IP__ on eth)
+After=network.target nv_tacp_init.service
+Wants=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# replace 而非 add，保证幂等（重复执行不报错）
+ExecStart=/sbin/ip addr replace __BOARD_LAN_IP__/24 dev eth
+# 只回收自己加的那一个地址，绝不触碰厂商配置的地址
+ExecStop=-/sbin/ip addr del __BOARD_LAN_IP__/24 dev eth
+
+[Install]
+WantedBy=multi-user.target

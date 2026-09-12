@@ -1,0 +1,20 @@
+[Unit]
+Description=IECU time sync guard (no RTC on this board)
+# 关键：必须排在出网通道之后。厂商的 systemd-timesyncd 是 DefaultDependencies=no
+# + Before=sysinit.target，它在网络与 iecu-egress 之前就跑了，那时出不去网。
+After=network-online.target iecu-egress.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# ★ 绝对不要写 RemainAfterExit=yes（陷阱 57）：写了之后单元会一直保持 active，
+#   而 systemd 对已 active 的单元再 start 是空操作，定时器每次触发都白跑。
+RemainAfterExit=no
+ExecStart=/var/lib/llm/net/timesync-guard.sh
+# 首次开机网络可能还没稳，给足重试时间
+TimeoutStartSec=180
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

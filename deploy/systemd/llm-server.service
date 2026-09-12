@@ -1,0 +1,26 @@
+[Unit]
+Description=llama.cpp server (Qwen3.6-35B-A3B)
+After=network-online.target
+Wants=network-online.target
+# 与厂商智驾栈互斥：它占 11 GB，和 LLM 不可能共存。
+# systemd 会在启动本服务时自动停掉 application_start，反之亦然。
+Conflicts=application_start.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/lib/llm
+ExecStart=/var/lib/llm/llama/run-server.sh
+# 16.5 GiB 模型从 eMMC mmap 进页缓存需要时间，别让 systemd 过早判定失败
+TimeoutStartSec=900
+TimeoutStopSec=60
+Restart=on-failure
+RestartSec=15
+# 板上 ulimit -l 只有 64 KB，mlock 用不了，全靠 mmap；放开文件句柄
+LimitNOFILE=65536
+# 内存吃紧时，让 OOM killer 优先选它而不是面板或平台服务
+OOMScoreAdjust=200
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,30 @@
+[Unit]
+Description=IECU 反向隧道客户端 (frpc, 这块板)
+# 依赖本板自己的出网单元。★ 不是 iecu-egress.service —— 那是上一块板的名字，
+# 这块板用 iecu-egress-audi.service（table 100 三条加法规则 + IECU_GUARD）。
+After=network.target iecu-egress-audi.service
+Requires=iecu-egress-audi.service
+# 板子可能比路由器先开机，连不上就一直重试，不要被 systemd 限流拦住
+# （systemd 245 要求这两项写在 [Unit] 段，写在 [Service] 会被静默忽略）
+StartLimitIntervalSec=0
+StartLimitBurst=0
+
+[Service]
+Type=simple
+# 以非特权专用用户运行。隧道进程不需要任何特权，
+# 而它持有 frps 的 token，出问题时爆炸半径要尽量小。
+User=iecufrp
+Group=iecufrp
+ExecStart=/var/lib/llm/frp/frpc -c /var/lib/llm/frp/frpc.toml
+Restart=always
+RestartSec=10
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/lib/llm/frp
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

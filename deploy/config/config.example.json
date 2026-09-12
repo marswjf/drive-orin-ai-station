@@ -1,0 +1,18 @@
+{
+  "说明": "把需要的站点对象复制到 config.json 与所有 config-preset-*.json 的 sites 数组。发布版默认 sites 为空，因此不会自动改网络或连接任何隧道。",
+  "sites": [
+    {
+      "name": "你的站点名称",
+      "addr": "192.0.2.15",
+      "cidr": 24,
+      "gw": "192.0.2.1",
+      "frps": "frps.example.com",
+      "frpsPort": 7000,
+      "panelProxyName": "iecu-panel",
+      "panelRemotePort": 7001
+    }
+  ],
+  "generalEgress": true,
+  "说明_隧道": "panelRemotePort 是 frps 侧只供 Caddy 反代的端口。公开版默认不生成 SSH 代理；需要远程 SSH 请使用自己的 VPN 或受限跳板机。",
+  "说明_模型": "config.json 的 model、mmproj、embeddingModel 是 /models/ 下的占位路径。按 baseline/models.tsv 与自己的模型文件修改。"
+}

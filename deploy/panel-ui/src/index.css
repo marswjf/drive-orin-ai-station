@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* 仪表盘配色：中性色偏冷蓝（仪表台质感），强调色用青蓝，
+   语义色（正常/注意/告警）与强调色分开，避免"蓝色到底是可点还是正常"的歧义。
+   浅色为基准，深色只覆盖变量，任何颜色都不允许只定义在媒体查询里。 */
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+/* 配色原则：正常状态一律中性色，颜色只留给需要处理的事。
+   一屏全是绿色等于没有重点——眼睛应该被异常吸引，而不是被"一切正常"吸引。
+   所以 --ok 只用在小圆点上，大数字永远是 --fg。 */
+/* 视觉识别：车规域控制器的运维台。取仪表与实验设备的语言——
+   冷灰中性打底，单一蓝色承担全部"可交互/被选中"的表达，
+   语义色（琥珀=注意，砖红=告警）只在真的出事时出现，绿色只用在状态圆点上。
+   一个色只干一件事，不重叠。 */
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #eef1f6;
+  --track: #e3e8ef;
+  --line: #d9dfe8;
+  --line-soft: #e8ecf2;
+  --fg: #151a21;
+  --fg-2: #525c6b;
+  --fg-3: #838d9b;
+  /* 交互色：只用于可点击、被选中、进度填充。不表达"好"或"坏" */
+  --accent: #2f6fd0;
+  --accent-soft: #dbe6f8;
+  --accent-fg: #ffffff;
+  /* 语义色：面积必须小 */
+  --ok: #2e8a5c;
+  --ok-bg: #ecf5f0;
+  --warn: #a86a00;
+  --warn-bg: #faf2e3;
+  --bad: #c03a2b;
+  --bad-bg: #fbecea;
+  --idle-bg: #eaeef4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1319;
+    --surface: #171c24;
+    --surface-2: #1e242d;
+    --track: #262d38;
+    --line: #2b323d;
+    --line-soft: #232932;
+    --fg: #e5e9ef;
+    --fg-2: #9aa4b2;
+    --fg-3: #6c7684;
+    --accent: #6ea3f0;
+    --accent-soft: #23344d;
+    --accent-fg: #0d1219;
+    --ok: #57b083;
+    --ok-bg: #17251e;
+    --warn: #d3a24e;
+    --warn-bg: #29231a;
+    --bad: #e07a6c;
+    --bad-bg: #2a1c1a;
+    --idle-bg: #222833;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1319;
+  --surface: #171c24;
+  --surface-2: #1e242d;
+  --track: #262d38;
+  --line: #2b323d;
+  --line-soft: #232932;
+  --fg: #e5e9ef;
+  --fg-2: #9aa4b2;
+  --fg-3: #6c7684;
+  --accent: #6ea3f0;
+  --accent-soft: #23344d;
+  --accent-fg: #0d1219;
+  --ok: #57b083;
+  --ok-bg: #17251e;
+  --warn: #d3a24e;
+  --warn-bg: #29231a;
+  --bad: #e07a6c;
+  --bad-bg: #2a1c1a;
+  --idle-bg: #222833;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 数字要能上下对齐——监控界面里这是硬需求，不是审美 */
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* 同一行的卡片必须等高。内容多少不同是内容的事，容器不能跟着长短不一 */
+.cardgrid { display: grid; gap: 12px; align-items: stretch; }
+.cardgrid > * { min-width: 0; }
+
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

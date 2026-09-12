@@ -1,0 +1,49 @@
+{
+ "target": "IECU 3.1（DRIVE AGX Orin）/ Z-Image Turbo GGUF Q8_0",
+ "note": "原作用 Z-Image Base fp16 + Fun-Distill-4steps LoRA + 邵氏风格 LoRA。板上没有 Base 全量权重（12 GB 级，且 14 GB 内存预算装不下再叠 LoRA），改用已有的 Turbo Q8_0 GGUF。Turbo 本身已是蒸馏版，原作 8 步 / cfg 1 的参数正好落在 Turbo 的合理区间，采样参数因此一个都不用动。\n\n★ 分辨率的曲折（值得记）：一开始把原作的 1664×928 降到了 1344×752，因为 1664×928 实测把进程 SIGKILL 了。但那次测试用的还是 fp16 文本编码器（7.7 GB）。换成 GGUF Q8_0（4.4 GB）省出 3.3 GB 之后，**原作的 1664×928 直接就跑通了**（128.6 秒）。所以这里保持原作分辨率不动。教训：分辨率上限不是一个固定数字，它取决于当时还剩多少内存——先把权重压下去，再谈分辨率。",
+ "changes": [
+  {
+   "node": 232,
+   "newType": "UnetLoaderGGUF",
+   "widgets": [
+    "z_image_turbo-Q8_0.gguf"
+   ],
+   "dropInputs": [
+    "weight_dtype"
+   ],
+   "why": "板上没有 z_image_base_fp16.safetensors（diffusion_models 里只有 GGUF），换成 ComfyUI-GGUF 的加载器。UNETLoader 的第二个 widget weight_dtype 必须一起去掉——GGUF 加载器没有这个参数，留着会被当成多余入参。"
+  },
+  {
+   "node": 234,
+   "widgets": [
+    "ae.safetensors"
+   ],
+   "why": "板上 VAE 只有 ae.safetensors（Z-Image 用的就是 FLUX 那个 ae），原作写的 z_image_turbo-vae.safetensors 是同一个东西的另一种命名。"
+  },
+  {
+   "node": 237,
+   "widgets": [
+    "Z-Image-Fun-Lora-Distill-4-Steps-2602-ComfyUI.safetensors",
+    0.65
+   ],
+   "why": "★ 用回原作指定的那一个。它是开源的，出自官方仓库 `alibaba-pai/Z-Image-Fun-Lora-Distill`（542 MB），2026-08-15 已下到板上——之前以为拿不到才用 turbo distill patch 替代。**同 seed 同参数 A/B 实测：官方版明显更好**，轮廓光更立体、妆容刻画更精细、衣物质感层次更多，耗时几乎一样（130.9s vs 128.6s）。⚠ 顺带推翻一个想当然：原本判断「Turbo 本身已是蒸馏版，再叠 distill LoRA 可能有害」，实测是反的。强度沿用原作的 0.65。"
+  },
+  {
+   "node": 238,
+   "bypass": true,
+   "why": "邵氏风格 LoRA 板上没有，且这是决定画面风格的核心权重，没有等价替代。bypass 而不是删除——模型链路照常直通，等 LoRA 下载到位后把 mode 改回 0 即可恢复原作效果。现在出的图是「没有邵氏风格的 Z-Image 图」，构图和提示词仍然生效。"
+  },
+  {
+   "node": 227,
+   "newType": "CLIPLoaderGGUF",
+   "widgets": [
+    "Qwen_3_4b-Q8_0.gguf",
+    "lumina2"
+   ],
+   "dropInputs": [
+    "device"
+   ],
+   "why": "两处改动。①type 从 qwen_image 改成 lumina2：两个值在板上都合法（28 项里都有），但这块板子上唯一实测出过图的是 lumina2（基准工作流 z-image-gguf.json，40.6 秒）；Z-Image 的文本塔在 ComfyUI 里按 Lumina2 处理，qwen_image 是给 Qwen-Image 那套用的。②换成 GGUF Q8_0 量化版编码器：实测载入 4424 MB，而 fp16 safetensors 是 7.7 GB，**省 3.3 GB**，质量几乎无损。CLIPLoaderGGUF 由 ComfyUI-GGUF 提供，参数比 CLIPLoader 少一个 device。"
+  }
+ ]
+}

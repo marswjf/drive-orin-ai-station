@@ -1,0 +1,21 @@
+[Unit]
+Description=IECU 站点识别与 frpc 出网通道
+# tn_eth_init 是厂商创建 VLAN 子接口的脚本，必须等它跑完；
+# iecu-lan-ip 负责保证 __BOARD_LAN_IP__ 存在，本单元在它之后跑
+After=network.target nv_tacp_init.service iecu-lan-ip.service
+Wants=network.target
+Requires=iecu-lan-ip.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/var/lib/llm/net/site-egress.sh
+# 停服务时只撤自己加的规则、表和入站防线，不碰主路由表、不碰任何地址
+# （30480/30490/30500 与 IECU_GUARD 是全局出网段加的，见 site-egress.sh）
+ExecStop=-/bin/bash -c 'for p in 30000 30001 30480 30490 30500; do while ip rule show | grep -q "^$p:"; do ip rule del priority $p || break; done; done; ip route flush table 100 2>/dev/null; if iptables -C INPUT -j IECU_GUARD 2>/dev/null; then iptables -D INPUT -j IECU_GUARD; iptables -F IECU_GUARD; iptables -X IECU_GUARD; fi; true'
+TimeoutStartSec=60
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
