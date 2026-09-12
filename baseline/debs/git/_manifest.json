@@ -1,0 +1,62 @@
+{
+ "host": "__BOARD_LAN_IP__",
+ "remoteRoot": "/var/lib/llm/dl/git",
+ "generated": "2026-08-17T14:14:39.437Z",
+ "excluded": [],
+ "items": [
+  {
+   "type": "f",
+   "path": "/var/lib/llm/dl/git/libhogweed6_3.7.3-1build2_arm64.deb",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 197036,
+   "mtime": 1786975940
+  },
+  {
+   "type": "f",
+   "path": "/var/lib/llm/dl/git/git_1%3a2.25.1-1ubuntu3.14_arm64.deb",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 4459692,
+   "mtime": 1740663206
+  },
+  {
+   "type": "f",
+   "path": "/var/lib/llm/dl/git/libnettle8_3.7.3-1build2_arm64.deb",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 169784,
+   "mtime": 1786975938
+  },
+  {
+   "type": "f",
+   "path": "/var/lib/llm/dl/git/libssh-4_0.9.3-2ubuntu2.5_arm64.deb",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 160144,
+   "mtime": 1705930504
+  },
+  {
+   "type": "f",
+   "path": "/var/lib/llm/dl/git/libcurl3-gnutls_7.68.0-1ubuntu2.25_arm64.deb",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 213732,
+   "mtime": 1734354991
+  },
+  {
+   "type": "f",
+   "path": "/var/lib/llm/dl/git/libldap-2.4-2_2.4.49+dfsg-2ubuntu1.10_arm64.deb",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 145184,
+   "mtime": 1706619365
+  }
+ ]
+}

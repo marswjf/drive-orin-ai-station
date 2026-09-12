@@ -1,0 +1,50 @@
+# IECU 3.1 运维面板的公网入口（发布模板）。
+# 跑在 frps 宿主机（如 LXC / 云主机）上，不在板子上——板子的默认路由指向
+# Hypervisor 内部虚拟网关，无法给公网客户端回包，DNAT 直连到板子是不通的。
+# 板子也够不到 Let's Encrypt，证书在这里终止。
+#
+# 所有位置值都来自 .env（复制 .env.example）。板子地址、证书文件名、
+# 站点端口都不在这里写死——按 .env 填自己的，避免把任何现役环境带进发布包。
+
+{
+	auto_https off
+	servers {
+		listener_wrappers {
+			http_redirect
+			tls
+		}
+	}
+}
+
+:{$IECU_PUBLIC_PORT} {
+	tls {$IECU_TLS_CERT} {$IECU_TLS_KEY}
+
+	# 同一域名下可能还有别的 HTTP 端口，发 HSTS 会连带污染
+	header -Strict-Transport-Security
+
+	# 模型数据面：公网不开放。局域网客户端直连板子面板，不走这里。
+	@dataplane path /v1 /v1/* /embed /embed/*
+	handle @dataplane {
+		header Content-Type "application/json; charset=utf-8"
+		respond `{"error":{"message":"IECU: /v1 and /embed are LAN-only. Call the model through the gateway instead.","type":"lan_only","code":"lan_only","param":null}}` 403
+	}
+
+	# 面板 UI、控制接口、聊天调试界面。登录由面板自己校验，
+	# 这里只负责把 X-Forwarded-* 带上——面板据此判定请求来自公网侧。
+	#
+	# 两个上游：板子在外网时走 frps 隧道，在家时直连局域网面板地址。
+	# lb_policy first = 永远用第一个健康的上游，隧道在线就走隧道。
+	# 健康检查打 /api/auth/state：不需要登录，返回 200 即面板活着。
+	# ⚠ 这里只放面板代理；不要把板子的 SSH 代理到公网。
+	handle {
+		reverse_proxy iecu-frps:{$IECU_FRP_PANEL_PORT} {$IECU_PANEL_LAN_ADDR} {
+			lb_policy first
+			health_uri /api/auth/state
+			health_interval 15s
+			health_timeout 3s
+			fail_duration 20s
+			# 聊天是流式输出，禁用缓冲否则思考链会一次性吐出来
+			flush_interval -1
+		}
+	}
+}

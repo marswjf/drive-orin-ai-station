@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>登录 · IECU 推理服务</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#dcdfe6; --field:#f0f2f5;
+  --fg:#1f2329; --fg2:#5c6470; --fg3:#8a929e;
+  --accent:#1c5fd4; --bad:#c0392b; --badbg:#fbeae8;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14171c; --card:#1c2027; --line:#2f3742; --field:#232830;
+    --fg:#e6e9ee; --fg2:#a3acba; --fg3:#6f7885;
+    --accent:#7aa5ff; --bad:#f87171; --badbg:#2d1a1a;
+  }
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;padding:24px;
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px 26px;width:100%;max-width:360px}
+h1{font-size:17px;margin:0 0 4px;font-weight:650}
+.sub{color:var(--fg3);font-size:12.5px;margin:0 0 22px}
+label{display:block;font-size:12px;color:var(--fg2);margin-bottom:6px;font-weight:600}
+input{width:100%;font:inherit;padding:9px 11px;border-radius:7px;border:1px solid var(--line);
+  background:var(--field);color:var(--fg)}
+input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+button{width:100%;margin-top:16px;font:inherit;font-weight:600;padding:9px;border-radius:7px;border:none;
+  background:var(--accent);color:#fff;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.msg{margin-top:14px;padding:9px 11px;border-radius:7px;font-size:12.5px;background:var(--badbg);color:var(--bad)}
+.foot{margin-top:20px;font-size:11.5px;color:var(--fg3);line-height:1.6}
+</style>
+</head>
+<body>
+<form class="card" id="f" autocomplete="on">
+  <h1>IECU 推理服务</h1>
+  <p class="sub">请输入管理密码</p>
+
+  <label for="pw">密码</label>
+  <input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
+
+  <button id="go" type="submit">登录</button>
+  <div id="msg" hidden class="msg"></div>
+
+  <p class="foot" id="foot">从局域网访问本面板无需登录。</p>
+</form>
+
+<script>
+const f = document.getElementById('f'), pw = document.getElementById('pw');
+const go = document.getElementById('go'), msg = document.getElementById('msg');
+
+function show(t) { msg.textContent = t; msg.hidden = false; }
+
+fetch('/api/auth/state').then(r => r.json()).then(s => {
+  if (s.loggedIn || s.lanFree) location.replace('/');
+  if (!s.configured) {
+    show('本面板尚未设置密码，需先在设备上执行 set-panel-password.sh 完成设置。');
+    go.disabled = true;
+  }
+}).catch(() => {});
+
+f.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  msg.hidden = true;
+  go.disabled = true;
+  go.textContent = '验证中…';
+  try {
+    const r = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw.value }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok) { location.replace('/'); return; }
+    show(d.error || ('登录失败（HTTP ' + r.status + '）'));
+    if (d.remaining !== undefined && d.remaining > 0) {
+      show((d.error || '密码错误') + '，剩余尝试次数 ' + d.remaining + ' 次');
+    }
+  } catch (err) {
+    show('无法连接面板服务：' + err.message);
+  }
+  pw.value = '';
+  pw.focus();
+  go.disabled = false;
+  go.textContent = '登录';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+[Unit]
+Description=IECU time sync guard timer (recheck clock periodically)
+
+[Timer]
+# 开机后 90 秒跑第一次：那时 network-online 与 iecu-egress 都已就绪
+OnBootSec=90s
+# 之后每 15 分钟复查一次。已同步时脚本立刻返回，开销可忽略。
+OnUnitActiveSec=15min
+Unit=iecu-timesync.service
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,24 @@
+{
+ "note": "本目录的内容清单。上一代 dd1ea52 归档不随本仓库分发，已从清单移除。",
+ "generated": "2026-08-19T14:44:00.000Z",
+ "baseline": "llama-b10498-5ecbe1ac1-cuda-cpu.tar.gz",
+ "items": [
+  {
+   "file": "llama-b10498-5ecbe1ac1-cuda-cpu.tar.gz",
+   "role": "基线（现役）",
+   "size": 438030232,
+   "sha256": "bbeeb50044760b93862b353a926f5f73d3299aa47950da475dcfbbb7e2ee5fb2",
+   "contains": [
+    "llama/bin (CPU, 75 条目, 67 MB)",
+    "llama/bin-cuda (CUDA, 78 条目, 787 MB)",
+    "llama/run-server.sh",
+    "llama/run-embedding.sh"
+   ],
+   "commit": "5ecbe1ac1",
+   "build": 10498,
+   "symlinks": 26,
+   "unpackedMB": 854,
+   "unpackTo": "/var/lib/llm/"
+  }
+ ]
+}

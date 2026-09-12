@@ -1,0 +1,17 @@
+[Unit]
+# 把闲置的 vblkdev23（26G，出厂空白 ext4）挂起来当数据分支。
+# 不写 /etc/fstab（红线 4：改错了开机挂载失败，而板子没有串口）——用独立 .mount unit。
+# unit 文件名必须与挂载点路径对应：/var/lib/llm/disks/d23 → var-lib-llm-disks-d23.mount
+Description=IECU 数据分区 vblkdev23 (26G)
+Documentation=man:mergerfs(1)
+Before=iecu-data.service
+
+[Mount]
+What=/dev/vblkdev23
+Where=/var/lib/llm/disks/d23
+Type=ext4
+# 只挂载，绝不格式化。这块分区出厂就是格式化好的 ext4。
+Options=rw,noatime,nosuid,nodev
+
+[Install]
+WantedBy=multi-user.target

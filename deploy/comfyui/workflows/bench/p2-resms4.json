@@ -1,0 +1,126 @@
+{
+ "1": {
+  "class_type": "UnetLoaderGGUF",
+  "inputs": {
+   "unet_name": "z_image_turbo-Q8_0.gguf"
+  },
+  "_meta": {
+   "title": "UnetLoaderGGUF"
+  }
+ },
+ "2": {
+  "class_type": "CLIPLoaderGGUF",
+  "inputs": {
+   "clip_name": "Qwen_3_4b-Q8_0.gguf",
+   "type": "lumina2"
+  },
+  "_meta": {
+   "title": "CLIPLoaderGGUF"
+  }
+ },
+ "3": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "ae.safetensors"
+  },
+  "_meta": {
+   "title": "VAELoader"
+  }
+ },
+ "4": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "clip": [
+    "2",
+    0
+   ],
+   "text": "一位身着轻盈白色抹胸长裙的东方古典美人，发髻高挽饰以繁复银紫宝石头冠和垂坠流苏耳环，颈间佩戴同色系璀璨项链，右手轻抚胸前衣襟，姿态优雅端庄；柔光从侧上方倾泻形成柔和明暗过渡，色调偏冷调蓝白为主辅以紫色点缀，仿佛置身仙境中的古风仙女肖像摄影。"
+  },
+  "_meta": {
+   "title": "CLIPTextEncode"
+  }
+ },
+ "5": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "clip": [
+    "2",
+    0
+   ],
+   "text": ""
+  },
+  "_meta": {
+   "title": "CLIPTextEncode"
+  }
+ },
+ "6": {
+  "class_type": "EmptySD3LatentImage",
+  "inputs": {
+   "width": 1024,
+   "height": 1024,
+   "batch_size": 1
+  },
+  "_meta": {
+   "title": "EmptySD3LatentImage"
+  }
+ },
+ "7": {
+  "class_type": "KSampler",
+  "inputs": {
+   "model": [
+    "1",
+    0
+   ],
+   "positive": [
+    "4",
+    0
+   ],
+   "negative": [
+    "5",
+    0
+   ],
+   "latent_image": [
+    "6",
+    0
+   ],
+   "seed": 31415926,
+   "steps": 4,
+   "cfg": 1,
+   "sampler_name": "res_multistep",
+   "scheduler": "simple",
+   "denoise": 1
+  },
+  "_meta": {
+   "title": "KSampler"
+  }
+ },
+ "8": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "7",
+    0
+   ],
+   "vae": [
+    "3",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "VAEDecode"
+  }
+ },
+ "9": {
+  "class_type": "SaveImage",
+  "inputs": {
+   "images": [
+    "8",
+    0
+   ],
+   "filename_prefix": "p2-resms4"
+  },
+  "_meta": {
+   "title": "SaveImage"
+  }
+ }
+}

@@ -1,0 +1,44 @@
+# 运行时归档：单个文件超过 GitHub 100 MB 上限，存放在 Releases 附件区。
+# 用 bash baseline/fetch-runtime.sh 下载。
+baseline/runtime/*.tar.gz
+baseline/llama/*.tar.gz
+baseline/wheels/torch-2.11.0-cp313-cp313-linux_aarch64.whl
+baseline/bin/node
+
+# 模型权重不随仓库分发，清单见 baseline/models.tsv
+*.gguf
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+
+# 凭证与私钥
+.env
+.env.local
+*.key
+*.pem
+*.crt
+*.p12
+id_rsa*
+
+# 依赖与构建产物
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.venv/
+dist/
+build/
+
+# 日志与临时文件
+*.log
+*.tmp
+*.bak
+*.swp
+
+# 操作系统与同步工具
+.DS_Store
+Thumbs.db
+desktop.ini
+*conflict*
+*冲突*

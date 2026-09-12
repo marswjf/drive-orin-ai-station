@@ -1,0 +1,1314 @@
+{
+  "last_link_id": 299,
+  "nodes": [
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "slot_index": 0,
+          "links": [
+            298
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        210,
+        106
+      ],
+      "pos": [
+        437.69451904296875,
+        111.87727355957031
+      ],
+      "widgets_values": [
+        1024,
+        1536,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "link": 269,
+          "label": "width",
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "link": 270,
+          "label": "height",
+          "type": "INT",
+          "localized_name": "高度"
+        },
+        {
+          "widget": {
+            "name": "batch_size"
+          },
+          "name": "batch_size",
+          "label": "batch_size",
+          "type": "INT",
+          "localized_name": "批次大小"
+        }
+      ],
+      "flags": {},
+      "id": 13,
+      "type": "EmptySD3LatentImage",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptySD3LatentImage"
+      },
+      "order": 12
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            290
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        270,
+        262
+      ],
+      "pos": [
+        692.0520629882812,
+        19.92758560180664
+      ],
+      "widgets_values": [
+        394213985443752,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 286,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "positive",
+          "link": 287,
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "localized_name": "正面条件"
+        },
+        {
+          "name": "negative",
+          "link": 288,
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "localized_name": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "link": 298,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "随机种"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "label": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "cfg"
+          },
+          "name": "cfg",
+          "label": "cfg",
+          "type": "FLOAT",
+          "localized_name": "CFG"
+        },
+        {
+          "widget": {
+            "name": "sampler_name"
+          },
+          "name": "sampler_name",
+          "label": "sampler_name",
+          "type": "COMBO",
+          "localized_name": "采样器"
+        },
+        {
+          "widget": {
+            "name": "scheduler"
+          },
+          "name": "scheduler",
+          "label": "scheduler",
+          "type": "COMBO",
+          "localized_name": "调度器"
+        },
+        {
+          "widget": {
+            "name": "denoise"
+          },
+          "name": "denoise",
+          "label": "denoise",
+          "type": "FLOAT",
+          "localized_name": "降噪"
+        }
+      ],
+      "flags": {},
+      "id": 139,
+      "type": "KSampler",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSampler"
+      },
+      "order": 16
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP",
+          "links": [
+            43
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        282.5554504394531,
+        109.89437866210938
+      ],
+      "pos": [
+        -239.26226806640625,
+        216.53256225585938
+      ],
+      "widgets_values": [
+        "Qwen_3_4b-Q8_0.gguf",
+        "lumina2"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "clip_name"
+          },
+          "name": "clip_name",
+          "label": "clip_name",
+          "type": "COMBO",
+          "localized_name": "CLIP名称"
+        },
+        {
+          "widget": {
+            "name": "type"
+          },
+          "name": "type",
+          "label": "type",
+          "type": "COMBO",
+          "localized_name": "类型"
+        }
+      ],
+      "flags": {},
+      "id": 18,
+      "type": "CLIPLoaderGGUF",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPLoader"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            288
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        204.134765625,
+        26
+      ],
+      "pos": [
+        439.32568359375,
+        28.186464309692383
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 221,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 111,
+      "type": "ConditioningZeroOut",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "order": 13
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "width",
+          "links": [
+            269
+          ],
+          "label": "宽度",
+          "type": "INT",
+          "localized_name": "width"
+        },
+        {
+          "name": "height",
+          "links": [
+            270
+          ],
+          "label": "高度",
+          "type": "INT",
+          "localized_name": "height"
+        },
+        {
+          "name": "batch_size",
+          "label": "batch_size",
+          "type": "INT",
+          "localized_name": "batch_size"
+        }
+      ],
+      "size": [
+        294.4657897949219,
+        124
+      ],
+      "pos": [
+        95.77854919433594,
+        351.3204345703125
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "image",
+          "link": 268,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "image"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 135,
+      "type": "GetImageSize",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "GetImageSize"
+      },
+      "order": 9
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            292
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        150,
+        46
+      ],
+      "pos": [
+        1009.1726684570312,
+        26.264074325561523
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 290,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 291,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 140,
+      "type": "VAEDecode",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 17
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            278
+          ],
+          "label": "MODEL",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        283.70819091796875,
+        158
+      ],
+      "pos": [
+        -239.26226806640625,
+        -2.5543630123138428
+      ],
+      "widgets_values": [
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 271,
+          "label": "model",
+          "type": "MODEL",
+          "localized_name": "model"
+        },
+        {
+          "name": "model_patch",
+          "link": 272,
+          "label": "model_patch",
+          "type": "MODEL_PATCH",
+          "localized_name": "model_patch"
+        },
+        {
+          "name": "vae",
+          "link": 273,
+          "label": "vae",
+          "type": "VAE",
+          "localized_name": "vae"
+        },
+        {
+          "shape": 7,
+          "name": "image",
+          "label": "image",
+          "type": "IMAGE",
+          "localized_name": "image"
+        },
+        {
+          "shape": 7,
+          "name": "inpaint_image",
+          "link": 275,
+          "label": "inpaint_image",
+          "type": "IMAGE",
+          "localized_name": "inpaint_image"
+        },
+        {
+          "shape": 7,
+          "name": "mask",
+          "link": 277,
+          "label": "mask",
+          "type": "MASK",
+          "localized_name": "mask"
+        },
+        {
+          "widget": {
+            "name": "strength"
+          },
+          "name": "strength",
+          "label": "strength",
+          "type": "FLOAT",
+          "localized_name": "strength"
+        }
+      ],
+      "flags": {},
+      "id": 136,
+      "type": "ZImageFunControlnet",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ZImageFunControlnet"
+      },
+      "order": 14
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "links": [
+            273,
+            291
+          ],
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "size": [
+        283.4667053222656,
+        59.63563537597656
+      ],
+      "pos": [
+        -239.26226806640625,
+        384.3396301269531
+      ],
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "vae_name"
+          },
+          "name": "vae_name",
+          "label": "vae_name",
+          "type": "COMBO",
+          "localized_name": "vae名称"
+        }
+      ],
+      "flags": {},
+      "id": 17,
+      "type": "VAELoader",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            286
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        289.6969909667969,
+        58
+      ],
+      "pos": [
+        95.77854919433594,
+        3.70902156829834
+      ],
+      "widgets_values": [
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 278,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "strength"
+          },
+          "shape": 7,
+          "name": "strength",
+          "label": "strength",
+          "type": "FLOAT",
+          "localized_name": "strength"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 137,
+      "type": "DifferentialDiffusion",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "DifferentialDiffusion"
+      },
+      "order": 15
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            221,
+            287
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 43,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 299,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "CLIPTextEncode",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        290.27984619140625,
+        157.95982360839844
+      ],
+      "pos": [
+        95.77854919433594,
+        127.68778991699219
+      ],
+      "id": 6,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 10
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            239
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        281.434326171875,
+        96.79862976074219
+      ],
+      "pos": [
+        -694.0083618164062,
+        -41.371856689453125
+      ],
+      "widgets_values": [
+        "z_image_turbo-Q8_0.gguf"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "unet_name"
+          },
+          "name": "unet_name",
+          "label": "unet_name",
+          "type": "COMBO",
+          "localized_name": "UNET名称"
+        }
+      ],
+      "flags": {},
+      "id": 16,
+      "type": "UnetLoaderGGUF",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 2
+    },
+    {
+      "mode": 4,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            240
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        277.0245361328125,
+        84.00702667236328
+      ],
+      "pos": [
+        -719.04931640625,
+        116.25045776367188
+      ],
+      "widgets_values": [
+        "Z-Image-Fun-Lora-Distill-4-Steps-2602-ComfyUI.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 239,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "label": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "label": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {},
+      "id": 119,
+      "type": "LoraLoaderModelOnly",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 8
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            271
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        275.9105529785156,
+        58
+      ],
+      "pos": [
+        -680.4951171875,
+        251.72308349609375
+      ],
+      "widgets_values": [
+        3
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 240,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "shift"
+          },
+          "name": "shift",
+          "label": "shift",
+          "type": "FLOAT",
+          "localized_name": "偏移"
+        }
+      ],
+      "flags": {},
+      "id": 11,
+      "type": "ModelSamplingAuraFlow",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "order": 11
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL_PATCH",
+          "links": [
+            272
+          ],
+          "label": "MODEL_PATCH",
+          "type": "MODEL_PATCH",
+          "localized_name": "MODEL_PATCH"
+        }
+      ],
+      "size": [
+        279.4451599121094,
+        58
+      ],
+      "pos": [
+        -677.2822875976562,
+        370.96844482421875
+      ],
+      "widgets_values": [
+        "Z-Image-Turbo-Fun-Controlnet-Union-2.1-lite-2602-8steps.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "name"
+          },
+          "name": "name",
+          "label": "name",
+          "type": "COMBO",
+          "localized_name": "name"
+        }
+      ],
+      "flags": {},
+      "id": 96,
+      "type": "ModelPatchLoader",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ModelPatchLoader"
+      },
+      "order": 3
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        }
+      ],
+      "size": [
+        558.439697265625,
+        482.9599914550781
+      ],
+      "pos": [
+        -1324.0426025390625,
+        -15.244451522827148
+      ],
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 292,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {},
+      "id": 141,
+      "type": "SaveImage",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 18
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            268,
+            275
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "links": [
+            277
+          ],
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "inpaint-768x1024.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "label": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "type": "LoadImage",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        426.0662536621094,
+        507.4059753417969
+      ],
+      "pos": [
+        -1826.118896484375,
+        -16.971485137939453
+      ],
+      "id": 134,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "image": "clipspace/clipspace-painted-masked-1765987933373.png [input]",
+        "ver": "0.4.0",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 4
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            299
+          ],
+          "label": "文本",
+          "type": "*",
+          "localized_name": "text"
+        },
+        {
+          "name": "show_help",
+          "label": "显示帮助",
+          "type": "STRING",
+          "localized_name": "show_help"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "美女戴着耳机"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "CR Text",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        338.835693359375,
+        200
+      ],
+      "pos": [
+        -2212.630126953125,
+        -30.810558319091797
+      ],
+      "id": 144,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CR Text"
+      },
+      "order": 7
+    },
+    {
+      "id": 147,
+      "type": "MarkdownNote",
+      "mode": 0,
+      "order": 0,
+      "pos": [
+        1200,
+        -110
+      ],
+      "size": [
+        430,
+        600
+      ],
+      "flags": {},
+      "color": "#432",
+      "bgcolor": "#653",
+      "widgets_values": [
+        "## 局部重绘（IECU 3.1 板上可跑版）\n\n**做什么**：把图片里圈出来的一块按提示词重画，其余部分原样保留。\n\n### 怎么用\n\n1. 在「输入区」的图片节点上传自己的图\n2. **在图片上右键 → 打开遮罩编辑器 → 涂抹要重画的区域 → 保存**\n3. 在提示词框里写这块区域要画成什么\n4. 点运行\n\n预置的示例图 `inpaint-768x1024.png` 中间已经带了一块遮罩，可以直接跑一次看效果。\n\n### 原理\n\n遮罩交给 ZImageFunControlnet 做局部约束，再由 DifferentialDiffusion 让边界过渡自然，\n所以采样降噪值是 1.0 也不会把整张图重画——**这个 1.0 不要改小**，改小反而会让重绘区糊。\n\n### 关键参数\n\n- **步数 8 / CFG 1.0**：Z-Image Turbo 的标准档，不要按普通模型的习惯调大\n- **输出尺寸**：跟随输入图，由图片尺寸节点自动读取，不用手填\n- **ControlNet**：Z-Image-Turbo-Fun-Controlnet-Union-2.1 的 lite 档（1.9 GB）\n\n### 加速 LoRA（默认关闭）\n\n模型加载器下面挂着一个官方 4 步蒸馏 LoRA，默认是旁路状态。\n要启用就取消旁路，**同时把采样步数从 8 改成 4**——只开 LoRA 不改步数没有意义。"
+      ],
+      "properties": {}
+    }
+  ],
+  "extra": {
+    "VHS_KeepIntermediate": true,
+    "links_added_by_ue": [],
+    "VHS_MetadataImage": true,
+    "ue_links": [],
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "workflowRendererVersion": "LG",
+    "VHS_latentpreviewrate": 0,
+    "frontendVersion": "1.23.0",
+    "VHS_latentpreview": false,
+    "ds": {
+      "offset": [
+        2331.1420502748983,
+        163.23732985831177
+      ],
+      "scale": 2.5019627910715108
+    }
+  },
+  "groups": [
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 5,
+      "title": "模型采样工作区",
+      "bounding": [
+        -729.04931640625,
+        -114.97185516357422,
+        1898.221923828125,
+        600.2922973632812
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 6,
+      "title": "生成区",
+      "bounding": [
+        -1334.0426025390625,
+        -88.84445190429688,
+        578.439697265625,
+        566.5599975585938
+      ]
+    },
+    {
+      "color": "#b58b2a",
+      "font_size": 24,
+      "flags": {},
+      "id": 7,
+      "title": "输入区",
+      "bounding": [
+        -2238.694580078125,
+        -117.26200103759766,
+        848.6419677734375,
+        617.6964721679688
+      ]
+    }
+  ],
+  "links": [
+    [
+      43,
+      18,
+      0,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      221,
+      6,
+      0,
+      111,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      239,
+      16,
+      0,
+      119,
+      0,
+      "MODEL"
+    ],
+    [
+      240,
+      119,
+      0,
+      11,
+      0,
+      "MODEL"
+    ],
+    [
+      268,
+      134,
+      0,
+      135,
+      0,
+      "IMAGE"
+    ],
+    [
+      269,
+      135,
+      0,
+      13,
+      0,
+      "INT"
+    ],
+    [
+      270,
+      135,
+      1,
+      13,
+      1,
+      "INT"
+    ],
+    [
+      271,
+      11,
+      0,
+      136,
+      0,
+      "MODEL"
+    ],
+    [
+      272,
+      96,
+      0,
+      136,
+      1,
+      "MODEL_PATCH"
+    ],
+    [
+      273,
+      17,
+      0,
+      136,
+      2,
+      "VAE"
+    ],
+    [
+      275,
+      134,
+      0,
+      136,
+      4,
+      "IMAGE"
+    ],
+    [
+      277,
+      134,
+      1,
+      136,
+      5,
+      "MASK"
+    ],
+    [
+      278,
+      136,
+      0,
+      137,
+      0,
+      "MODEL"
+    ],
+    [
+      286,
+      137,
+      0,
+      139,
+      0,
+      "MODEL"
+    ],
+    [
+      287,
+      6,
+      0,
+      139,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      288,
+      111,
+      0,
+      139,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      290,
+      139,
+      0,
+      140,
+      0,
+      "LATENT"
+    ],
+    [
+      291,
+      17,
+      0,
+      140,
+      1,
+      "VAE"
+    ],
+    [
+      292,
+      140,
+      0,
+      141,
+      0,
+      "IMAGE"
+    ],
+    [
+      298,
+      13,
+      0,
+      139,
+      3,
+      "LATENT"
+    ],
+    [
+      299,
+      144,
+      0,
+      6,
+      1,
+      "STRING"
+    ]
+  ],
+  "id": "f7f76eef-8a25-4dfa-8e73-4f847abbde72",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 147,
+  "revision": 0,
+  "_iecu_adapt": {
+    "source": "Z-Image+Controlnet+2++最强局部重绘+换脸换装+真实无痕+万物迁移.json",
+    "adaptedFor": "IECU 3.1（DRIVE AGX Orin）/ Z-Image Turbo GGUF Q8_0 + Fun-ControlNet-Union lite",
+    "note": "局部重绘：遮罩 → ZImageFunControlnet 局部约束 → DifferentialDiffusion 边界过渡 → KSampler。\n\n2026-09-01 补齐：此前缺 ControlNet 权重，工作流打不开也跑不了。\n本轮下载了 Z-Image-Turbo-Fun-Controlnet-Union-2.1-lite-2602-8steps.safetensors（1.88 GB，\n来源 ModelScope PAI/Z-Image-Turbo-Fun-Controlnet-Union-2.1），放在 /opt/m/sd-models/model_patches/。\n\n★ 放 /opt/m 不放 /opt/m0：这块板的 /opt/m0 是 vblkdev56，与 /opt/other 同设备，\n而 /opt/other/overlay/upper 是 /var 的可写层宿主，往那儿放模型等于吃掉 /var；\nextra_model_paths.yaml 里也物理上不登记这个根，放进去 ComfyUI 扫不到。\n\n⚠ A-138「ControlNet 双分支跑不动」那条结论是 py3.10 / torch 2.4.1 旧栈下的，已被 A-156 推翻：\n现役栈（torch 2.11 + Flash Attention）上 512² 实测 21.3 秒出图。",
+    "changes": [
+      "节点 16 [UNETLoader] → [UnetLoaderGGUF]  mode 0→0\n      widgets: [\"z_image_turbo_bf16.safetensors\",\"default\"] → [\"z_image_turbo-Q8_0.gguf\"]\n      理由: 板上没有 z_image_turbo_bf16.safetensors（全量 bf16 约 12 GB，装不下也没必要），换成已有的 GGUF Q8_0。同时去掉 UNETLoader 特有的 weight_dtype widget——GGUF 加载器没这个参数。",
+      "节点 18 [CLIPLoader] → [CLIPLoaderGGUF]  mode 0→0\n      widgets: [\"qwen_3_4b.safetensors\",\"lumina2\",\"default\"] → [\"Qwen_3_4b-Q8_0.gguf\",\"lumina2\"]\n      理由: ★ 关键的一步：文本编码器从 fp16 safetensors（7.7 GB）换成 GGUF Q8_0（4.1 GB），省 3.6 GB。不换的话这条链路**加载阶段就会被 SIGKILL**（2026-08-14 实测：UNet 6.9 + 编码器 7.7 + ControlNet 1.9 = 16.5 GB 常驻，加激活值超出可用内存，21:03:05 进程被杀）。换完 12.9 GB，落回预算内。CLIPLoaderGGUF 由 ComfyUI-GGUF 提供，参数比 CLIPLoader 少一个 device，所以要 dropInputs。type 仍是 lumina2。",
+      "节点 96 [ModelPatchLoader] → [ModelPatchLoader]  mode 0→0\n      widgets: [\"Z-Image-Turbo-Fun-Controlnet-Union-2.0.safetensors\"] → [\"Z-Image-Turbo-Fun-Controlnet-Union-2.1-lite-2602-8steps.safetensors\"]\n      理由: 原作要的 Union-2.0 是 6.4 GB 全量版，叠在 6.9 G UNet + 7.7 G 文本编码器之上会 OOM。换成官方 2.1 lite 版（1.9 GB，2026-08-14 从 alibaba-pai 下载，DONE 校验 2016627488 字节）。选 2602 是因为它与原作 LoRA 名里的版本代号一致。ControlNet 放在 model_patches 目录（ModelPatchLoader 读这里，不是 controlnet 目录），并且 extra_model_paths.yaml 里必须登记 model_patches 键——原先漏配，导致下拉一直是空的。",
+      "节点 134 LoadImage 输入图 clipspace/<hash>.png → inpaint-768x1024.png\n      理由: 原值是作者在自己机器上用遮罩编辑器生成的临时文件，板上 input/clipspace/ 目录不存在，打开即缺图。换成随工作流一起备好的示例图（768×1024，中间带一块 304×320 的遮罩，可直接跑一次看效果）。",
+      "删除 [145 LoadImage] [146 LoadImage] 与组 8\n      理由: 两个节点没有任何输出连线，引用的 pasted/<hash>.png 也不在板上；组 8 里只有它们俩。",
+      "节点 119 LoraLoaderModelOnly 模型 daming3dstyle_000002000.safetensors → Z-Image-Fun-Lora-Distill-4-Steps-2602-ComfyUI.safetensors\n      理由: 原值是作者的风格 LoRA，板上没有，留着就是一行找不到的文件名。换成官方 4 步蒸馏加速 LoRA（542 MB，本轮已下到板上），**保持旁路状态**——它要配 4 步采样，不是打开就能用。",
+      "组 7 标题「输入提示词 右键遮罩编辑器中涂抹要重绘的区域」→「输入区」\n      理由: 组标题写成两句操作说明，屏幕上一行放不下也读不清；操作步骤移到新增的说明卡里，写全了。",
+      "新增 [147 MarkdownNote] 说明卡\n      理由: 局部重绘要先涂遮罩才有意义，不写清楚用户会直接点运行然后拿到一张整体重画的图。"
+    ]
+  }
+}

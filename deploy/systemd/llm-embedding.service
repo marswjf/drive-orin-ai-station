@@ -1,0 +1,20 @@
+[Unit]
+Description=llama.cpp embedding server (Qwen3-Embedding-0.6B)
+After=network-online.target
+Wants=network-online.target
+Conflicts=application_start.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/lib/llm
+ExecStart=/var/lib/llm/llama/run-embedding.sh
+TimeoutStartSec=180
+Restart=on-failure
+RestartSec=15
+LimitNOFILE=65536
+OOMScoreAdjust=300
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

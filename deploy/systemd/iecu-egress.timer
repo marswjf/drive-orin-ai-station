@@ -1,0 +1,18 @@
+[Unit]
+Description=定时复检 IECU 所在的局域网并维护出网通道
+# 为什么要定时跑：开机时交换机可能还没协商完，探测会假失败；
+# 板子换地方（家里↔单位）也需要自动切换隧道服务端。
+# 脚本本身幂等，配置没变就什么都不做。
+# ★ 必须指向 -recheck 单元而不是 iecu-egress.service：后者是
+#   RemainAfterExit=yes 的 oneshot，一直保持 active，systemd 对已 active
+#   的单元再 start 是空操作——2026-08-14 实测这个定时器空转了近三个月，
+#   一次复检都没真正执行过（journal 里只有开机那一次）。
+
+[Timer]
+OnBootSec=90s
+OnUnitActiveSec=5min
+AccuracySec=30s
+Unit=iecu-egress-recheck.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,44 @@
+{
+ "host": "__BOARD_LAN_IP__",
+ "remoteRoot": "/tmp/iecu-cap-stage",
+ "generated": "2026-08-14T13:33:04.873Z",
+ "excluded": [],
+ "items": [
+  {
+   "type": "f",
+   "path": "/tmp/iecu-cap-stage/model-list.json",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 287846,
+   "mtime": 1786714383
+  },
+  {
+   "type": "f",
+   "path": "/tmp/iecu-cap-stage/custom-node-list.json",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 2997814,
+   "mtime": 1786714383
+  },
+  {
+   "type": "f",
+   "path": "/tmp/iecu-cap-stage/extension-node-map.json",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 2409787,
+   "mtime": 1786714383
+  },
+  {
+   "type": "f",
+   "path": "/tmp/iecu-cap-stage/iecu-capability.json",
+   "mode": 33188,
+   "uid": 0,
+   "gid": 0,
+   "size": 35238,
+   "mtime": 1786714383
+  }
+ ]
+}

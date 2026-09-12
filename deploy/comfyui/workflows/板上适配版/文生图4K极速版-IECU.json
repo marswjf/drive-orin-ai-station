@@ -1,0 +1,1196 @@
+{
+  "last_link_id": 144,
+  "nodes": [
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            13
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        397.7010803222656,
+        88.77333068847656
+      ],
+      "pos": [
+        302.1712341308594,
+        1170.993408203125
+      ],
+      "widgets_values": [
+        "z_image_turbo-Q8_0.gguf"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "unet_name"
+          },
+          "name": "unet_name",
+          "label": "unet_name",
+          "type": "COMBO",
+          "localized_name": "UNET名称"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 1,
+      "type": "UnetLoaderGGUF",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            4,
+            67
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        397.7067565917969,
+        138.5518798828125
+      ],
+      "pos": [
+        301.8097839355469,
+        1321.0570068359375
+      ],
+      "widgets_values": [
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 129,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 139,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 17
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            5
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        197.712890625,
+        26
+      ],
+      "pos": [
+        417.48883056640625,
+        1387.399658203125
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 4,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 6,
+      "type": "ConditioningZeroOut",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "order": 18
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            7
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        268.7918395996094,
+        268.6000061035156
+      ],
+      "pos": [
+        731.1226196289062,
+        1171.2781982421875
+      ],
+      "widgets_values": [
+        1119334724022995,
+        "randomize",
+        10,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 13,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "positive",
+          "link": 67,
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "localized_name": "正面条件"
+        },
+        {
+          "name": "negative",
+          "link": 5,
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "localized_name": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "link": 134,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "link": 133,
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "随机种"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "label": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "cfg"
+          },
+          "name": "cfg",
+          "label": "cfg",
+          "type": "FLOAT",
+          "localized_name": "CFG"
+        },
+        {
+          "widget": {
+            "name": "sampler_name"
+          },
+          "name": "sampler_name",
+          "label": "sampler_name",
+          "type": "COMBO",
+          "localized_name": "采样器"
+        },
+        {
+          "widget": {
+            "name": "scheduler"
+          },
+          "name": "scheduler",
+          "label": "scheduler",
+          "type": "COMBO",
+          "localized_name": "调度器"
+        },
+        {
+          "widget": {
+            "name": "denoise"
+          },
+          "name": "denoise",
+          "label": "denoise",
+          "type": "FLOAT",
+          "localized_name": "降噪"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 4,
+      "type": "KSampler",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSampler"
+      },
+      "order": 19
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "links": [
+            8
+          ],
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "size": [
+        268.9653625488281,
+        58.53866958618164
+      ],
+      "pos": [
+        730.9853515625,
+        1501.16455078125
+      ],
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "vae_name"
+          },
+          "name": "vae_name",
+          "label": "vae_name",
+          "type": "COMBO",
+          "localized_name": "vae名称"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 3,
+      "type": "VAELoader",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            140
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        268.861328125,
+        48.55999755859375
+      ],
+      "pos": [
+        731.0604248046875,
+        1611.2401123046875
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 7,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 8,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 8,
+      "type": "VAEDecode",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 20
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP",
+          "links": [
+            129
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        289.08258056640625,
+        108.93022918701172
+      ],
+      "pos": [
+        -18.964862823486328,
+        1171.0394287109375
+      ],
+      "widgets_values": [
+        "Qwen_3_4b-Q8_0.gguf",
+        "lumina2"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "clip_name"
+          },
+          "name": "clip_name",
+          "label": "clip_name",
+          "type": "COMBO",
+          "localized_name": "CLIP名称"
+        },
+        {
+          "widget": {
+            "name": "type"
+          },
+          "name": "type",
+          "label": "type",
+          "type": "COMBO",
+          "localized_name": "类型"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 2,
+      "type": "CLIPLoaderGGUF",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPLoader"
+      },
+      "order": 2
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "SEED",
+          "links": [
+            133
+          ],
+          "label": "随机种",
+          "dir": 4,
+          "type": "INT"
+        }
+      ],
+      "size": [
+        398.087890625,
+        138.59889221191406
+      ],
+      "pos": [
+        302.04571533203125,
+        1521.232666015625
+      ],
+      "widgets_values": [
+        -1,
+        "",
+        "",
+        ""
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "id": 95,
+      "type": "Seed (rgthree)",
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 3
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "prompt",
+          "links": [
+            139
+          ],
+          "label": "提示词文本",
+          "type": "STRING",
+          "localized_name": "prompt"
+        },
+        {
+          "name": "show_help",
+          "links": [],
+          "label": "show_help",
+          "type": "STRING",
+          "localized_name": "show_help"
+        }
+      ],
+      "size": [
+        368.9638671875,
+        488.8916931152344
+      ],
+      "pos": [
+        -419.1166687011719,
+        1170.9586181640625
+      ],
+      "widgets_values": [
+        "一位身着轻盈白色抹胸长裙的东方古典美人，发髻高挽饰以繁复银紫宝石头冠和垂坠流苏耳环，颈间佩戴同色系璀璨项链，右手轻抚胸前衣襟，姿态优雅端庄；前景为半透明薄纱飘逸如云雾般环绕肩臂，中景是人物上半身特写聚焦于精致妆容与珠宝细节，背景呈朦胧灰蓝色烟霭渐变空间营造空灵神秘意境，整体采用竖向中心对称式构图突出人物神圣气质，视线自然引导向面部神态与饰品交相辉映处，柔光从侧上方倾泻形成柔和明暗过渡，阴影细腻而不突兀，画面弥漫出仙气缭绕静谧梦幻之氛，色调偏冷调蓝白为主辅以紫色点缀增强高贵典雅格调，质感呈现丝滑肌肤与晶莹珠玉交织的真实触感，仿佛置身仙境中的古风仙女肖像摄影场景。"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "prompt"
+          },
+          "name": "prompt",
+          "label": "prompt",
+          "type": "STRING",
+          "localized_name": "提示词"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 17,
+      "type": "CR Prompt Text",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CR Prompt Text"
+      },
+      "order": 4
+    },
+    {
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            134
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        928,
+        1648,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "label": "width",
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "label": "height",
+          "type": "INT",
+          "localized_name": "高度"
+        },
+        {
+          "widget": {
+            "name": "batch_size"
+          },
+          "name": "batch_size",
+          "label": "batch_size",
+          "type": "INT",
+          "localized_name": "批次大小"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "EmptyLatentImage",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        288.5538024902344,
+        138.6524200439453
+      ],
+      "pos": [
+        -18.777902603149414,
+        1521.089111328125
+      ],
+      "id": 51,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 5
+    },
+    {
+      "outputs": [],
+      "color": "#fff0",
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": false
+      },
+      "type": "Label (rgthree)",
+      "title": "请输入生图尺寸👆",
+      "mode": 0,
+      "bgcolor": "#fff0",
+      "size": [
+        193.37109375,
+        24
+      ],
+      "pos": [
+        33.35431671142578,
+        1698.705322265625
+      ],
+      "id": 97,
+      "properties": {
+        "padding": 0,
+        "backgroundColor": "transparent",
+        "fontFamily": "Arial",
+        "borderRadius": 0,
+        "textAlign": "left",
+        "widget_ue_connectable": {},
+        "fontSize": 24,
+        "fontColor": "#00FF00"
+      },
+      "order": 6
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "image_urls",
+          "label": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "localized_name": "images"
+        }
+      ],
+      "size": [
+        238.96188354492188,
+        323.1298828125
+      ],
+      "pos": [
+        1880.8619384765625,
+        1270.0634765625
+      ],
+      "widgets_values": [
+        "t2i-4k"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 143,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 41,
+      "type": "SaveImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 22
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "localized_name": "images"
+        }
+      ],
+      "size": [
+        387.7388610839844,
+        489.4598693847656
+      ],
+      "pos": [
+        1802.181396484375,
+        1170.5760498046875
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 144,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 98,
+      "type": "PreviewImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "PreviewImage"
+      },
+      "order": 23
+    },
+    {
+      "outputs": [],
+      "color": "#fff0",
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "type": "Label (rgthree)",
+      "title": "请输入提示词👆",
+      "mode": 0,
+      "bgcolor": "#fff0",
+      "size": [
+        169.37109375,
+        24
+      ],
+      "pos": [
+        -317.0269470214844,
+        1697.2354736328125
+      ],
+      "id": 102,
+      "properties": {
+        "padding": 0,
+        "backgroundColor": "transparent",
+        "fontFamily": "Arial",
+        "borderRadius": 0,
+        "textAlign": "left",
+        "widget_ue_connectable": {},
+        "fontSize": 24,
+        "fontColor": "#00FF00"
+      },
+      "order": 9
+    },
+    {
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "label": "可选连接",
+          "type": "*"
+        }
+      ],
+      "color": "#3da244",
+      "inputs": [],
+      "flags": {},
+      "type": "Fast Groups Bypasser (rgthree)",
+      "title": "高清放大",
+      "mode": 0,
+      "bgcolor": "#298e30",
+      "size": [
+        336.3370666503906,
+        106
+      ],
+      "pos": [
+        -1596.6485595703125,
+        1451.1065673828125
+      ],
+      "id": 100,
+      "properties": {
+        "customSortAlphabet": "",
+        "matchColors": "green",
+        "widget_ue_connectable": {},
+        "sort": "position",
+        "matchTitle": "",
+        "showNav": true,
+        "toggleRestriction": "default"
+      },
+      "order": 14
+    },
+    {
+      "id": 105,
+      "type": "UpscaleModelLoader",
+      "mode": 0,
+      "order": 21,
+      "pos": [
+        1085,
+        1175
+      ],
+      "size": [
+        330,
+        58
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "widgets_values": [
+        "4x-UltraSharp.pth"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "model_name"
+          },
+          "name": "model_name",
+          "label": "model_name",
+          "type": "COMBO",
+          "localized_name": "模型名称"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "UPSCALE_MODEL",
+          "links": [
+            141
+          ],
+          "label": "放大模型",
+          "type": "UPSCALE_MODEL",
+          "localized_name": "UPSCALE_MODEL"
+        }
+      ],
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "UpscaleModelLoader"
+      }
+    },
+    {
+      "id": 106,
+      "type": "ImageUpscaleWithModel",
+      "mode": 0,
+      "order": 22,
+      "pos": [
+        1085,
+        1290
+      ],
+      "size": [
+        330,
+        50
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "link": 141,
+          "label": "放大模型",
+          "type": "UPSCALE_MODEL",
+          "localized_name": "放大模型"
+        },
+        {
+          "name": "image",
+          "link": 140,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            142
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ImageUpscaleWithModel"
+      }
+    },
+    {
+      "id": 107,
+      "type": "ImageScaleToTotalPixels",
+      "mode": 0,
+      "order": 23,
+      "pos": [
+        1085,
+        1395
+      ],
+      "size": [
+        330,
+        130
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "widgets_values": [
+        "lanczos",
+        7.92,
+        8
+      ],
+      "inputs": [
+        {
+          "name": "image",
+          "link": 142,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upscale_method"
+          },
+          "name": "upscale_method",
+          "label": "upscale_method",
+          "type": "COMBO",
+          "localized_name": "放大方法"
+        },
+        {
+          "widget": {
+            "name": "megapixels"
+          },
+          "name": "megapixels",
+          "label": "megapixels",
+          "type": "FLOAT",
+          "localized_name": "百万像素"
+        },
+        {
+          "widget": {
+            "name": "resolution_steps"
+          },
+          "shape": 7,
+          "name": "resolution_steps",
+          "label": "resolution_steps",
+          "type": "INT",
+          "localized_name": "分辨率步进"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            143,
+            144
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ImageScaleToTotalPixels"
+      }
+    },
+    {
+      "id": 108,
+      "type": "MarkdownNote",
+      "mode": 0,
+      "order": 0,
+      "pos": [
+        2255,
+        1097
+      ],
+      "size": [
+        430,
+        572
+      ],
+      "flags": {},
+      "color": "#432",
+      "bgcolor": "#653",
+      "widgets_values": [
+        "## 文生图 4K 极速版（IECU 3.1 板上可跑版）\n\n**流程**：提示词 → Z-Image Turbo 出图 → 4 倍超分 → 归一到 4K → 存图\n\n### 怎么用\n\n1. 在左侧「提示词」里写要画的内容\n2. 「生图尺寸」默认 928×1648（竖版 9:16）\n3. 点运行\n\n### 关键参数\n\n- **步数 10 / CFG 1.0**：Z-Image Turbo 是蒸馏模型，这两个值不要按普通模型的习惯调大\n- **出图尺寸**：928×1648 是本板已验证的档位。调大之前先确认内存余量——没有独立显存，注意力开销随像素数平方增长\n- **超分模型**：4x-UltraSharp，锐利，适合人像与写实。板上另有 RealESRGAN_x4plus，风格更柔和\n- **最终像素 7.92**：对 9:16 就是 2160×3840，长边正好 4K。⚠ 这个参数是 1024 进制（total = 值 × 1024 × 1024），不是一百万。按总像素归一，换比例不会变形\n\n### 关掉高清放大\n\n用左侧「高清放大」开关把该组整体旁路，直接输出 928×1648 原图，快很多。\n\n### 与原版的差别\n\n原版的 4K 放大用 SeedVR2，其 DiT 是 7B fp16（14 GB），本板装不下，作者留的是旁路状态——等于没有 4K。这里换成板上已有的超分模型，放大会真的执行。"
+      ],
+      "properties": {}
+    }
+  ],
+  "extra": {
+    "links_added_by_ue": [],
+    "ue_links": [],
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "ds": {
+      "offset": [
+        -1251.7691880343825,
+        -1181.8476058830927
+      ],
+      "scale": 1.6350799082656562
+    }
+  },
+  "groups": [
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 6,
+      "title": "核心采样",
+      "bounding": [
+        -28.973970413208008,
+        1097.3934326171875,
+        1038.9246826171875,
+        572.4381103515625
+      ]
+    },
+    {
+      "color": "#A88",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 8,
+      "title": "提示词",
+      "bounding": [
+        -429.1166687011719,
+        1097.358642578125,
+        388.9638671875,
+        572.49169921875
+      ]
+    },
+    {
+      "color": "#8A8",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 10,
+      "title": "功能：高清放大(4K)",
+      "bounding": [
+        1051.6275634765625,
+        1097.421630859375,
+        718.2848510742188,
+        571.4475708007812
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 11,
+      "title": "保存+预览",
+      "bounding": [
+        1792.04345703125,
+        1097.5269775390625,
+        408.248291015625,
+        572.0313720703125
+      ]
+    }
+  ],
+  "links": [
+    [
+      4,
+      5,
+      0,
+      6,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      6,
+      0,
+      4,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      4,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      8,
+      3,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      13,
+      1,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      67,
+      5,
+      0,
+      4,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      129,
+      2,
+      0,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      133,
+      95,
+      0,
+      4,
+      4,
+      "INT"
+    ],
+    [
+      134,
+      51,
+      0,
+      4,
+      3,
+      "LATENT"
+    ],
+    [
+      139,
+      17,
+      0,
+      5,
+      1,
+      "STRING"
+    ],
+    [
+      140,
+      8,
+      0,
+      106,
+      1,
+      "IMAGE"
+    ],
+    [
+      141,
+      105,
+      0,
+      106,
+      0,
+      "UPSCALE_MODEL"
+    ],
+    [
+      142,
+      106,
+      0,
+      107,
+      0,
+      "IMAGE"
+    ],
+    [
+      143,
+      107,
+      0,
+      41,
+      0,
+      "IMAGE"
+    ],
+    [
+      144,
+      107,
+      0,
+      98,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "id": "07fd3352-11ca-4df8-bebb-45432c155e4d",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 108,
+  "revision": 0,
+  "_iecu_adapt": {
+    "source": "Z-image文生图+_+图生图+_+4K放大（极速版）.json",
+    "adaptedFor": "IECU 3.1（DRIVE AGX Orin）/ Z-Image Turbo GGUF Q8_0 全量化组合",
+    "note": "这张工作流的活跃链路是标准文生图：UNet + CLIP + VAE + KSampler + EmptyLatent，接 4 倍超分。\n\n2026-09-01 第二轮改造把「4K」做成真的：原版的放大链路挂在 SeedVR2 上（DiT 是 7B fp16，14 GB，本板装不下），\n作者留的是旁路状态，等于工作流名字里的 4K 从来没执行过。现改用板上已有的 4x-UltraSharp 超分模型，\n再按总像素归一到 8.3 MP（9:16 即 2162×3840）。\n\n同轮删掉了两个板上没有注册的节点类型：Qwen3_VQA_Plus（图生图自动反推提示词，需要 Qwen3-VL-8B）与 easy int。\n它们原本是旁路状态，wf-doctor 因此不报——但前端打开仍会飘红，因为前端查的是类型注册与否，与 mode 无关。\n\n保留的 rgthree 成员 Label 与 Fast Groups Bypasser 是纯前端节点（web/comfyui 下有 js、Python 侧不注册），\n不在数据流上，转 API 时自动跳过，不影响出图。",
+    "changes": [
+      "节点 1 [UNETLoader] → [UnetLoaderGGUF]  mode 0→0\n      widgets: [\"BEYOND REALITY SUPER Z IMAGE 3.0 淡妆浓抹 BF16.safetensors\",\"default\"] → [\"z_image_turbo-Q8_0.gguf\"]\n      理由: 板上没有 BEYOND REALITY 那个社区微调底模（bf16 全量，12 GB 级），换成官方 Z-Image Turbo 的 GGUF Q8_0。UNETLoader 的 weight_dtype widget 一并去掉——GGUF 加载器没有这个参数。",
+      "节点 2 [CLIPLoader] → [CLIPLoaderGGUF]  mode 0→0\n      widgets: [\"qwen_3_4b.safetensors\",\"qwen_image\",\"default\"] → [\"Qwen_3_4b-Q8_0.gguf\",\"lumina2\"]\n      理由: 两处改动。①**type 从 qwen_image 改成 lumina2**——这是隐形陷阱，两个值在板上都合法（28 项里都有），填错不报错但出图会跑偏；Z-Image 的文本塔在 ComfyUI 里按 Lumina2 处理。②换成 GGUF Q8_0 量化版（载入 4.4 GB，fp16 是 7.7 GB，省 3.3 GB），这是本项目的默认原则。",
+      "节点 51 [EmptyLatentImage] → [EmptyLatentImage]  mode 0→0\n      widgets: [1080,1920,1] → [928,1648,1]\n      理由: 原作 1080×1920 = 2.07 MP，比本板已验证能跑的 1664×928（1.54 MP）大 34%，有被 SIGKILL 的风险（没有 flash attention，注意力开销随像素数平方增长）。改成 928×1648 —— 比例仍是 9:16（0.5631 vs 原 0.5625），像素 1.53 MP 与已验证档位同级。**想要更大尺寸，先确认当前权重组合下的余量**，别直接调。",
+      "删除 [36 SeedVR2LoadDiTModel] [37 SeedVR2LoadVAEModel] [39 SeedVR2VideoUpscaler]\n      理由: DiT 是 seedvr2_ema_7b_fp16（7B fp16 约 14 GB），单模型就吃满本板 14 GB 权重预算，与 Z-Image 无法共存。三个节点原为旁路状态，工作流名字里的「4K」实际从未执行。",
+      "新增 [105 UpscaleModelLoader] [106 ImageUpscaleWithModel] [107 ImageScaleToTotalPixels]\n      理由: 用板上已有的 4x-UltraSharp.pth 做 4 倍超分，接一个按总像素归一的缩放（8.3 MP，9:16 即 2162×3840，长边 4K）。归一用 ImageScaleToTotalPixels 而不是写死宽高的 ImageScale——后者 crop=disabled 时会强制拉伸，换个比例就把画面压变形。三个节点落在「功能：高清放大(4K)」组的 bounding 内，仍受「高清放大」开关整组旁路。",
+      "删除 [42 Qwen3_VQA_Plus] [46 LoadImage] [103 easy int] [104 Label]\n      理由: Qwen3_VQA_Plus 与 easy int 两个类型板上都没有注册，虽然原本是旁路状态、wf-doctor 不报，但前端打开会飘红——前端只查类型注册与否，不看 mode。Qwen3_VQA_Plus 还需要 Qwen3-VL-8B，图生图自动反推提示词这条路在本板走不通。",
+      "删除 [91 Any Switch] [99 Fast Groups Bypasser「选择生图模式」]\n      理由: 图生图分支删除后 Any Switch 只剩单一输入源，CR Prompt Text 直连 CLIPTextEncode 即可；模式切换开关失去可切换的对象。",
+      "节点 100 标题「是否开启扩图？」→「高清放大」\n      理由: 它 matchColors=green，控制的是「功能：高清放大(4K)」这一组；而「扩图」在中文里指 outpainting（扩展画布），是另一回事，原标题会误导。",
+      "节点 41 SaveImage 文件名前缀 \"ComfyUI\" → \"t2i-4k\"\n      理由: 默认前缀在输出目录里分不出来源。",
+      "节点 107 ImageScaleToTotalPixels megapixels 8.3 → 7.92\n      理由: 这个参数是 **1024 进制**（源码 total = megapixels * 1024 * 1024），不是一百万。按 8.3 实测出图 2216×3928，长边比 4K 大 2.3%，与说明卡里写的 2162×3840 对不上。改成 7.92 后实测正好 2160×3840。"
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "1": {
+    "class_type": "LoadVideo",
+    "inputs": {
+      "file": "MiniMax_H3_00003_.mp4"
+    },
+    "_meta": {
+      "title": "LoadVideo"
+    }
+  },
+  "2": {
+    "class_type": "GetVideoComponents",
+    "inputs": {
+      "video": [
+        "1",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "GetVideoComponents"
+    }
+  },
+  "3": {
+    "class_type": "SeedVR2LoadDiTModel",
+    "inputs": {
+      "model": "seedvr2_ema_3b_fp8_e4m3fn.safetensors",
+      "device": "cuda:0"
+    },
+    "_meta": {
+      "title": "SeedVR2LoadDiTModel"
+    }
+  },
+  "4": {
+    "class_type": "SeedVR2LoadVAEModel",
+    "inputs": {
+      "model": "ema_vae_fp16.safetensors",
+      "device": "cuda:0"
+    },
+    "_meta": {
+      "title": "SeedVR2LoadVAEModel"
+    }
+  },
+  "5": {
+    "class_type": "SeedVR2VideoUpscaler",
+    "inputs": {
+      "image": [
+        "2",
+        0
+      ],
+      "dit": [
+        "3",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ],
+      "seed": 42,
+      "resolution": 512,
+      "max_resolution": 0,
+      "batch_size": 1,
+      "uniform_batch_size": false,
+      "color_correction": "lab"
+    },
+    "_meta": {
+      "title": "SeedVR2VideoUpscaler"
+    }
+  },
+  "6": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "2",
+        1
+      ],
+      "fps": 24,
+      "bit_depth": 8
+    },
+    "_meta": {
+      "title": "CreateVideo"
+    }
+  },
+  "7": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "6",
+        0
+      ],
+      "filename_prefix": "video/H3_upscaled",
+      "format": "auto",
+      "codec": "auto"
+    },
+    "_meta": {
+      "title": "SaveVideo"
+    }
+  }
+}

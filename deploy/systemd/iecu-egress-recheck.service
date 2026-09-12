@@ -1,0 +1,15 @@
+[Unit]
+Description=IECU 站点复检（仅由 iecu-egress.timer 周期触发）
+# 为什么单独一个单元：iecu-egress.service 用 RemainAfterExit=yes 保持
+# active，是为了让 systemctl stop 能触发 ExecStop 撤掉规则；但这也导致
+# 定时器对它的周期 start 全部空转（见 iecu-egress.timer 里的注释）。
+# 本单元跑完即退出，定时器每次触发都会真正执行一遍脚本；脚本幂等，
+# 站点没变时什么都不改。
+After=iecu-lan-ip.service
+
+[Service]
+Type=oneshot
+ExecStart=/var/lib/llm/net/site-egress.sh
+TimeoutStartSec=120
+StandardOutput=journal
+StandardError=journal

@@ -1,0 +1,21 @@
+{
+  "name": "iecu-panel-ui",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "IECU 3.1 运维面板前端。源码在项目里（跟同步走），构建在 D:\\tmp 下进行（node_modules 不进同步目录）。用 build.ps1 构建。",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.0.0",
+    "vite": "^6.0.7"
+  }
+}

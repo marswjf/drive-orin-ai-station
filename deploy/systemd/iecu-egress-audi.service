@@ -1,0 +1,16 @@
+[Unit]
+# 这块板出网 + 入站防线。脚本本体在 /var/lib/llm/net/audi-egress.sh
+# （红线 7：可执行文件只能放 /var/lib/llm/，/opt/* 全是 noexec）。
+Description=IECU 出网与入站防线 (table 100 + IECU_GUARD)
+After=network.target nv_tacp_init.service iecu-lan-ip.service
+Wants=network.target
+Requires=iecu-lan-ip.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/var/lib/llm/net/audi-egress.sh start
+ExecStop=/var/lib/llm/net/audi-egress.sh stop
+
+[Install]
+WantedBy=multi-user.target

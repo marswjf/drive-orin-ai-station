@@ -1,0 +1,31 @@
+[Unit]
+# 用 mergerfs 把三个分区并成一个 95G 的视图挂到 /var/lib/llm/data。
+#
+# 为什么是 mergerfs 而不是 LVM：这 13 个 vblkdev 是 Hypervisor 的 PCT 静态切好、
+# 由 Storage Server VM 下发的虚拟块设备，Guest 内改不了 PCT，分区本身合不了。
+# LVM 能做出一个大卷，但要格式化两个分区 + mask opt-update.mount（触红线 4）；
+# mergerfs 不格式化、不改 fstab、不动分区表，umount 就完全恢复。
+#
+# 已知限制：单个文件不能跨分支，最大受限于最大分支（当前 /opt/update 38G）。
+# 另：/opt/m 与 /opt/update 在 fstab 里带 noexec，可执行文件仍只能放 /var/lib/llm（红线 7）。
+Description=IECU 合并存储视图 (mergerfs, 95G)
+After=var-lib-llm-disks-d23.mount opt-m.mount opt-update.mount
+Requires=var-lib-llm-disks-d23.mount
+RequiresMountsFor=/opt/m /opt/update
+
+[Service]
+Type=simple
+# -f 前台运行，让 systemd 能正确追踪进程；否则 mergerfs 会自己 daemonize
+# category.create=mfs  写新文件时选剩余空间最多的分支
+# minfreespace=2G      分支剩余低于 2G 就不再往它写
+# cache.files=partial  模型是大文件顺序读，部分缓存最合适
+ExecStart=/var/lib/llm/bin/mergerfs -f \
+  -o category.create=mfs,minfreespace=2G,fsname=iecu-data,use_ino,allow_other,cache.files=partial,dropcacheonclose=true,noatime \
+  /var/lib/llm/disks/d23/data:/opt/update/data:/opt/m/data \
+  /var/lib/llm/data
+ExecStop=-/bin/umount /var/lib/llm/data
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

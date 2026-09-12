@@ -1,0 +1,35 @@
+# frps —— IECU 板子的反向隧道服务端（发布模板）。读 .env 注入，避免把真实 token 落进仓库。
+# 使用的 auth.token 由 .env 的 IECU_FRP_TOKEN 提供；运行前从 template 编辑 .env 并用 # 取消注释。
+#
+# 为什么需要它：板子的默认路由指向 Hypervisor 内部虚拟网关，公网端口转发到它
+# 必然不通（回包出不去）。而反向隧道是板子主动往外连，回包走的是这条既有连接，
+# 全程不查路由表——所以隧道能用，DNAT 不能用。
+# 附带好处是板子挪到任何网络（单位、别的机房）都不需要那边开端口。
+
+bindAddr = "0.0.0.0"
+bindPort = {{ .Envs.IECU_FRPS_BIND_PORT }}
+
+# 只允许注册这一小段端口。万一 token 泄露，别人也只能占这几个口，
+# 不能拿这条隧道把内网别的东西开出去。
+# ⚠ 这个范围必须包含 IECU_FRP_PANEL_PORT；建议只放开面板用的一段。
+allowPorts = [{ start = {{ .Envs.IECU_FRP_PANEL_PORT }}, end = {{ .Envs.IECU_FRP_PANEL_PORT }} }]
+
+auth.method = "token"
+auth.token = "{{ .Envs.IECU_FRP_TOKEN }}"
+
+# 板子在外网时链路质量未知，心跳放宽一点，避免抖动就断开重连
+transport.maxPoolCount = 5
+transport.tcpMux = true
+transport.tcpKeepalive = 7200
+transport.heartbeatTimeout = 90
+
+# 状态页：只发布到宿主机的 127.0.0.1，看隧道在不在线用。
+# 使用独立的管理员凭据，不要与 FRP token 复用。
+webServer.addr = "127.0.0.1"
+webServer.port = {{ .Envs.IECU_FRP_DASHBOARD_PORT }}
+webServer.user = "{{ .Envs.IECU_FRP_DASHBOARD_USER }}"
+webServer.password = "{{ .Envs.IECU_FRP_DASHBOARD_PASS }}"
+
+log.to = "console"
+log.level = "info"
+log.maxDays = 3

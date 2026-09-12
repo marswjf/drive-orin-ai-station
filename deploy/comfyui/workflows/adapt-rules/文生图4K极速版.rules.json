@@ -1,0 +1,25 @@
+{
+  "target": "IECU 3.1（DRIVE AGX Orin）/ Z-Image Turbo GGUF Q8_0 全量化组合",
+  "note": "这张工作流看着复杂（24 节点），但**活跃链路就是标准文生图**：UNet + CLIP + VAE + KSampler + EmptyLatent。SeedVR2 那套 4K 放大（DiT 模型 + VAE + Upscaler）、Qwen3_VQA_Plus 反推提示词、easy int，作者自己就设成了 bypass（mode=4），所以不用管——SeedVR2-7B fp16 是 14 GB，本板也装不下。\n\n缺的两个节点类型 `Fast Groups Bypasser (rgthree)` 与 `Label (rgthree)` 是 **rgthree 的纯前端节点**（分组开关、文字标签），不在数据流上、不参与执行，转 API 格式时会被自动跳过，不影响出图。板上 rgthree 已装，数据流上用到的 `Seed (rgthree)`、`Any Switch (rgthree)` 都已注册。\n\n原作底模是社区微调的 BEYOND REALITY SUPER Z IMAGE 3.0（HF 有：`Nurburgring/BEYOND_REALITY_Z_IMAGE`），是 bf16 全量权重。板上用官方 Z-Image Turbo 的 GGUF 替代；想要那个微调的画风，可以后面单独下载。",
+  "changes": [
+    {
+      "node": 1,
+      "newType": "UnetLoaderGGUF",
+      "widgets": ["z_image_turbo-Q8_0.gguf"],
+      "dropInputs": ["weight_dtype"],
+      "why": "板上没有 BEYOND REALITY 那个社区微调底模（bf16 全量，12 GB 级），换成官方 Z-Image Turbo 的 GGUF Q8_0。UNETLoader 的 weight_dtype widget 一并去掉——GGUF 加载器没有这个参数。"
+    },
+    {
+      "node": 2,
+      "newType": "CLIPLoaderGGUF",
+      "widgets": ["Qwen_3_4b-Q8_0.gguf", "lumina2"],
+      "dropInputs": ["device"],
+      "why": "两处改动。①**type 从 qwen_image 改成 lumina2**——这是隐形陷阱，两个值在板上都合法（28 项里都有），填错不报错但出图会跑偏；Z-Image 的文本塔在 ComfyUI 里按 Lumina2 处理。②换成 GGUF Q8_0 量化版（载入 4.4 GB，fp16 是 7.7 GB，省 3.3 GB），这是本项目的默认原则。"
+    },
+    {
+      "node": 51,
+      "widgets": [928, 1648, 1],
+      "why": "原作 1080×1920 = 2.07 MP，比本板已验证能跑的 1664×928（1.54 MP）大 34%，有被 SIGKILL 的风险（没有 flash attention，注意力开销随像素数平方增长）。改成 928×1648 —— 比例仍是 9:16（0.5631 vs 原 0.5625），像素 1.53 MP 与已验证档位同级。**想要更大尺寸，先确认当前权重组合下的余量**，别直接调。"
+    }
+  ]
+}

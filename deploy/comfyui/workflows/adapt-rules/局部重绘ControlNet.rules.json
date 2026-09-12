@@ -1,0 +1,25 @@
+{
+  "target": "IECU 3.1（DRIVE AGX Orin）/ Z-Image Turbo GGUF Q8_0 + Fun-ControlNet-Union lite",
+  "note": "原作用 Z-Image Turbo bf16 全量权重 + Fun-Controlnet-Union-2.0（6.4 GB 全量）。板子内存装不下这个组合：现役出图时 UNet(6.9 G GGUF) + 文本编码器(7.7 G) 已占约 17 G，再叠 6.4 G 必然 OOM。改用官方 lite 版 ControlNet（1.9 GB，同为 8 步档），总量落在预算内。作者原本就把 daming3dstyle 那个 LoRA 设成了 bypass，无需处理。CLIPLoader(lumina2) 与 VAE(ae.safetensors) 原作写的就是板上的值，也不用动。\n\n⚠ 这个工作流的输出尺寸由 GetImageSize 从**输入图片**动态取得（EmptySD3LatentImage 的 width/height 是连线而非固定值），所以分辨率风险转移到了你上传的图上：**输入图不要超过约 1.05 M 像素**（1024×1024 或 832×1248 这个量级），否则会触发 A-137 那个进程被杀的问题。",
+  "changes": [
+    {
+      "node": 16,
+      "newType": "UnetLoaderGGUF",
+      "widgets": ["z_image_turbo-Q8_0.gguf"],
+      "dropInputs": ["weight_dtype"],
+      "why": "板上没有 z_image_turbo_bf16.safetensors（全量 bf16 约 12 GB，装不下也没必要），换成已有的 GGUF Q8_0。同时去掉 UNETLoader 特有的 weight_dtype widget——GGUF 加载器没这个参数。"
+    },
+    {
+      "node": 18,
+      "newType": "CLIPLoaderGGUF",
+      "widgets": ["Qwen_3_4b-Q8_0.gguf", "lumina2"],
+      "dropInputs": ["device"],
+      "why": "★ 关键的一步：文本编码器从 fp16 safetensors（7.7 GB）换成 GGUF Q8_0（4.1 GB），省 3.6 GB。不换的话这条链路**加载阶段就会被 SIGKILL**（2026-08-14 实测：UNet 6.9 + 编码器 7.7 + ControlNet 1.9 = 16.5 GB 常驻，加激活值超出可用内存，21:03:05 进程被杀）。换完 12.9 GB，落回预算内。CLIPLoaderGGUF 由 ComfyUI-GGUF 提供，参数比 CLIPLoader 少一个 device，所以要 dropInputs。type 仍是 lumina2。"
+    },
+    {
+      "node": 96,
+      "widgets": ["Z-Image-Turbo-Fun-Controlnet-Union-2.1-lite-2602-8steps.safetensors"],
+      "why": "原作要的 Union-2.0 是 6.4 GB 全量版，叠在 6.9 G UNet + 7.7 G 文本编码器之上会 OOM。换成官方 2.1 lite 版（1.9 GB，2026-08-14 从 alibaba-pai 下载，DONE 校验 2016627488 字节）。选 2602 是因为它与原作 LoRA 名里的版本代号一致。ControlNet 放在 model_patches 目录（ModelPatchLoader 读这里，不是 controlnet 目录），并且 extra_model_paths.yaml 里必须登记 model_patches 键——原先漏配，导致下拉一直是空的。"
+    }
+  ]
+}

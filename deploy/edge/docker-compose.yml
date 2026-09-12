@@ -1,0 +1,54 @@
+name: iecu-edge
+
+# IECU 3.1 的公网入口（发布模板），部署在 frps 宿主机（LXC / 云主机）。
+# 复制 .env.example 为 .env，所有端口与路径都从 .env 读。
+#
+# 结构：一块板对应一个 frps 隧道（面板代理），公网入口由 Caddy 出口。
+#   - 板子的 frpc 连到本机 frps 的绑定向导端口。
+#   - 板子的面板经 frps 隧道进来，再由 Caddy 终结 TLS 并反代。
+# ⚠ 这里只放面板代理；不要把板子的 SSH 代理到公网（root + 弱口令扛不住爆破）。
+
+services:
+  iecu-frps:
+    container_name: iecu-frps
+    # frps 是静态 Go 二进制，挂进 alpine 直接跑，省一次镜像拉取
+    image: alpine:latest
+    restart: unless-stopped
+    command: ["/opt/frps", "-c", "/etc/frp/frps.toml"]
+    volumes:
+      - ./frps/frps:/opt/frps:ro
+      - ./frps/frps.toml:/etc/frp/frps.toml:ro
+    ports:
+      - "${IECU_FRPS_BIND_PORT}:${IECU_FRPS_BIND_PORT}"       # 板子 frpc 接入口
+      - "127.0.0.1:${IECU_FRP_PANEL_PORT}:${IECU_FRP_PANEL_PORT}"  # 面板隧道，只给 Caddy
+      - "127.0.0.1:${IECU_FRP_DASHBOARD_PORT}:${IECU_FRP_DASHBOARD_PORT}"  # 状态页，只给本机
+    environment:
+      TZ: Asia/Shanghai
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - iecu-net
+
+  iecu-edge-caddy:
+    container_name: iecu-edge-caddy
+    image: caddy:2-alpine
+    restart: unless-stopped
+    security_opt:
+      - seccomp=unconfined
+    ports:
+      - "${IECU_PUBLIC_PORT}:${IECU_PUBLIC_PORT}"            # 公网面板入口
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - "${IECU_TLS_DIR}:/certs:ro"
+      - ./data:/data
+      - ./config:/config
+    environment:
+      TZ: Asia/Shanghai
+    depends_on:
+      - iecu-frps
+    networks:
+      - iecu-net
+
+networks:
+  iecu-net:
+    name: iecu-net
